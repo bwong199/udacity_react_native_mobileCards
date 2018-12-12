@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { Component }  from 'react';
 import { ExpoLinksView } from '@expo/samples';
 import { CardSection } from '../components/CardSection';
 import { Input } from '../components/Input';
 import { Card } from '../components/Card';
-
+import { connect } from 'react-redux';
 import { Button } from '../components/Button';
-
+import { createDeck } from '../actions'
 import { TouchableWithoutFeedback, View, Picker, StyleSheet, Text } from 'react-native';
 
-export default class AddDeckScreen extends React.Component {
+class AddDeckScreen extends Component {
   static navigationOptions = {
     title: 'Add Deck',
   };
 
   onButtonPress(){
-
-    console.log('should create card');
+    this.props.createDeck('apple');
 }
 
   render() {
@@ -24,7 +23,7 @@ export default class AddDeckScreen extends React.Component {
         <CardSection>
           <Input
             label="Name"
-            placeholder="What is the title of your new Deck?"
+            placeholder="Add title of your new deck"
           />
         </CardSection>
         <CardSection>
@@ -46,3 +45,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+const mapStateToProps = (state) => {
+
+  console.log(state);
+
+  return state;
+};
+
+export default connect(mapStateToProps, {createDeck} )(AddDeckScreen) ;

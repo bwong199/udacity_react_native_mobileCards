@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
 import Router from './Router';
+import ReduxThunk from 'redux-thunk'
 
 export default class App extends React.Component {
   // state = {
@@ -22,7 +23,7 @@ export default class App extends React.Component {
     //     />
     //   );
     // } else {
-      const store = createStore(reducers, {}, applyMiddleware())
+      const store = createStore(reducers, {}, applyMiddleware(ReduxThunk))
 
       return (
 
