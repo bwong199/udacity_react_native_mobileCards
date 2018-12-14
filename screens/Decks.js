@@ -38,8 +38,8 @@ export default class Decks extends React.Component {
 
               <Router>
             <Scene key="root">
-                <Scene key='tab1' title='Add' component={HomeScreen} icon={TabIcon}  />
-                <Scene key='tab2' title='Grocery' component={LinksScreen} icon={TabIcon} initial/>
+                <Scene key='tab1' title='Add' component={HomeScreen} icon={TabIcon}  initial/>
+                <Scene key='tab2' title='Grocery' component={LinksScreen} icon={TabIcon} />
             </Scene>
         </Router>
         {/* <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
