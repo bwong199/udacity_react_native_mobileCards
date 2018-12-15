@@ -14,7 +14,7 @@ import { Scene, Router, ActionConst } from 'react-native-router-flux';
 
 import { MonoText } from '../components/StyledText';
 import HomeScreen from './HomeScreen';
-import LinksScreen from './LinksScreen';
+import CardDetails from './CardDetails';
 
 class TabIcon extends React.Component {
   render() {
@@ -28,46 +28,15 @@ class TabIcon extends React.Component {
 }
 
 export default class Decks extends React.Component {
-  // static navigationOptions = {
-  //   header: null,
-  // };
-
   render() {
     return (
       <View style={styles.container}>
-
-              <Router>
-            <Scene key="root">
-                <Scene key='tab1' title='Add' component={HomeScreen} icon={TabIcon}  initial/>
-                <Scene key='tab2' title='Grocery' component={LinksScreen} icon={TabIcon} />
-            </Scene>
+        <Router>
+          <Scene key="root">
+            <Scene key='deckHome' title='Decks' component={HomeScreen} icon={TabIcon} initial />
+            <Scene key='cardDetails' title='Card Details' component={CardDetails} icon={TabIcon} />
+          </Scene>
         </Router>
-        {/* <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <ListView/>
-          </View>
-
-          <View style={styles.getStartedContainer}>
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView> */}
-
-    
       </View>
     );
   }

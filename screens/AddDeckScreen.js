@@ -30,7 +30,7 @@ class AddDeckScreen extends Component {
   }
 
   onButtonPress() {
-    this.props.createDeck('apple');
+    this.props.createDeck(this.props.deckName);
 
     this.refs.toast.show('Deck Created!');
 
@@ -71,9 +71,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const {deckName } = state.decks
-  console.log(deckName);
-  return {deckName } ;
+  const {deckName, decks } = state.decks
+  console.log( 'deckName',deckName);
+  console.log( 'decks',decks);
+
+  return {deckName, decks } ;
 };
 
 export default connect(mapStateToProps, { createDeck, deckNameChanged })(AddDeckScreen);
