@@ -15,22 +15,19 @@ class CardDetails extends React.Component {
     };
 
     onAddCardPress() {
-        console.log('add card pressed');
+        const deckID = this.props.deck.id;
+        Actions.addCard();
 
     }
 
     onStartQuizPress() {
         console.log('start quiz pressed');
-
     }
 
     onDeleteDeckPress() {
         const deckID = this.props.deck.id;
         this.props.deleteDeck(deckID);
         Actions.deckHome();
-
-
-
     }
 
     render() {

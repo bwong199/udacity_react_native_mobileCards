@@ -15,6 +15,7 @@ import { Scene, Router, ActionConst } from 'react-native-router-flux';
 import { MonoText } from '../components/StyledText';
 import HomeScreen from './HomeScreen';
 import CardDetails from './CardDetails';
+import AddCardScreen from './AddCardScreen';
 
 class TabIcon extends React.Component {
   render() {
@@ -35,6 +36,8 @@ export default class Decks extends React.Component {
           <Scene key="root">
             <Scene key='deckHome' title='Decks' component={HomeScreen} icon={TabIcon} initial />
             <Scene key='cardDetails' title='Card Details' component={CardDetails} icon={TabIcon} />
+            <Scene key='addCard' title='Add Card' component={AddCardScreen} icon={TabIcon} />
+
           </Scene>
         </Router>
       </View>

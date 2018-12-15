@@ -2,7 +2,10 @@ import { AsyncStorage } from "react-native"
 import { DECK_SAVED_SUCCESS, 
     DECK_NAME_CHANGED, 
     GET_DECKS,
-    DECK_DELETED_SUCCESS } from './types';
+    DECK_DELETED_SUCCESS,
+    QUESTION_CHANGED,
+    ANSWER_CHANGED
+} from './types';
 
 function generateUID() {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
@@ -69,6 +72,20 @@ export function getDecks() {
 export const deckNameChanged = (text) => {
     return {
         type: DECK_NAME_CHANGED,
+        payload: text
+    }
+}
+
+export const questionChanged = (text) => {
+    return {
+        type: QUESTION_CHANGED,
+        payload: text
+    }
+}
+
+export const answerChanged = (text) => {
+    return {
+        type: ANSWER_CHANGED,
         payload: text
     }
 }
