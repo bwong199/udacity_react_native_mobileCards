@@ -19,11 +19,10 @@ import CardSection from '../components/CardSection';
 import { Actions } from 'react-native-router-flux';
 import CardDetails from './CardDetails';
 
-class HomeScreen extends Component {
-  static navigationOptions = {
-    header: null,
-  };
-
+class Quiz extends Component {
+    static navigationOptions = {
+        title: 'Deck Quiz Screen',
+    };
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
@@ -33,32 +32,25 @@ class HomeScreen extends Component {
   }
 
   componentWillMount() {
-    this.props.getDecks();
-    //  AsyncStorage.removeItem('decks');
-    AsyncStorage.getItem('decks').then((res) => {
-      var arr = JSON.parse(res)
-      const ds = this.state.dataSource.cloneWithRows(arr);
+    const ds = this.state.dataSource.cloneWithRows(this.props.deck.questions);
 
-      this.setState({ dataSource: ds.cloneWithRows(arr) })
+    this.setState({ dataSource: ds })
 
-
-    })
   }
 
-  componentWillUpdate() {
-    AsyncStorage.getItem('decks').then((res) => {
-      var arr = JSON.parse(res)
-      const ds = this.state.dataSource.cloneWithRows(arr);
-      this.setState({ dataSource: ds }) 
-    })
-  }
+//   componentWillUpdate() {
+//     AsyncStorage.getItem('decks').then((res) => {
+//       var arr = JSON.parse(res)
+//       const ds = this.state.dataSource.cloneWithRows(arr);
+//       this.setState({ dataSource: ds }) 
+//     })
+//   }
 
   componentDidMount() {
     console.log('mount');
   }
 
   onRowPress(deck) {
-    console.log('responsive');
     Actions.cardDetails({ deck });
 
   }
@@ -66,6 +58,7 @@ class HomeScreen extends Component {
 
 
   render() {
+      console.log('quiz',this.props.deck);
     return (
 
       <View style={styles.container}>
@@ -78,9 +71,8 @@ class HomeScreen extends Component {
               renderRow={(data) =>
                 <TouchableWithoutFeedback onPress={(event) => this.onRowPress(data)}>
                   <View style={styles.containerStyle}>
-                <Text>{data.name}</Text>
+                <Text>{data.question}</Text>
 
-                    <Text>{"\n"}{"\n"}{data.questions.length} cards</Text>
     
                   </View>
                 </TouchableWithoutFeedback>
@@ -115,16 +107,10 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   const { deckName, decks, created } = state.decks
 
-  if(created){
-    var lastDeck = decks.reverse()[0];
-
-    Actions.cardDetails({lastDeck});
-  }
-
   return {
     decks,
     created
   };
 };
 
-export default connect(mapStateToProps, { getDecks, resetCreated })(HomeScreen);
+export default connect(mapStateToProps, { getDecks, resetCreated })(Quiz);

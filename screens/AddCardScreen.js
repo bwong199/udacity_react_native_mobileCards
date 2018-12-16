@@ -42,7 +42,9 @@ class AddCardScreen extends Component {
 
     this.props.addCardToDeck(deck.id, question, answer)
     
-    this.refs.toast.show('Deck Created!');
+    this.refs.toast.show('Deck Created!', 300);
+
+    Actions.pop();
 
   }
 

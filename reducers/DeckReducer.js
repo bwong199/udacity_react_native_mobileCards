@@ -22,13 +22,19 @@ export default (state = INITIAL_STATE, action) => {
         console.log('card saved in reducer', action.payload);
             return {
                 ...state,
-                decks: action.payload
+                decks: action.payload, 
+                question: " ",
+                answer: " ",
+                deckName: " " 
             }
         case DECK_SAVED_SUCCESS:
             return {
                 ...state,
                 decks: action.payload,
-                created: true
+                created: true, 
+                question: " ",
+                answer: " ",
+                deckName: " " 
             }
         case DECK_DELETED_SUCCESS:
             return {

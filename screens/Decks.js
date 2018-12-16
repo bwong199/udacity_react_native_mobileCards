@@ -17,6 +17,7 @@ import { MonoText } from '../components/StyledText';
 import HomeScreen from './HomeScreen';
 import CardDetails from './CardDetails';
 import AddCardScreen from './AddCardScreen';
+import Quiz from './Quiz';
 
 class TabIcon extends React.Component {
   render() {
@@ -32,11 +33,9 @@ class TabIcon extends React.Component {
 export default class Decks extends React.Component {
 
   componentWillUpdate() {
-    console.log('in DECKS')
   }
 
   handleClick(){
-    console.log('clicked');
   }
 
   render() {
@@ -49,6 +48,7 @@ export default class Decks extends React.Component {
               <Scene key='deckHome' title='Decks' component={HomeScreen} icon={TabIcon} initial />
               <Scene key='cardDetails' title='Card Details' component={CardDetails} icon={TabIcon} />
               <Scene key='addCard' title='Add Card' component={AddCardScreen} icon={TabIcon} />
+              <Scene key='quiz' title='Quiz' component={Quiz} icon={TabIcon} />
             </Scene>
           </Router>
         </View>

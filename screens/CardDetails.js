@@ -24,25 +24,6 @@ class CardDetails extends React.Component {
         title: 'Card Details Screen',
     };
 
-    componentWillMount(){
-        // console.log('this.props.deck', this.props.deck);
-
-        // if(!this.props.deck){
-        //     // console.log('NO DECK');
-        //     // console.log(this.props.decks);
-        //     // var decks = this.props.decks;
-        //     // console.log(decks[decks.length - 1])
-        //     this.setState({ deck: this.props.decks[0]})
-
-        //     console.log('DECK STATE' , this.state)
-        // }
-    }
-
-    componentDidMount(){
-        // this.props.resetCreated();
-    }
-
-
     onAddCardPress() {
         if(this.props.deck){
             const deck = this.props.deck;
@@ -50,12 +31,13 @@ class CardDetails extends React.Component {
         } else {
             console.log('test', this.props.lastDeck)
         }
-
-
     }
 
     onStartQuizPress() {
         console.log('start quiz pressed');
+        const deck = this.props.deck ? this.props.deck : this.props.lastDeck
+
+        Actions.quiz({deck});
     }
 
     onDeleteDeckPress() {
@@ -64,9 +46,6 @@ class CardDetails extends React.Component {
         this.props.deleteDeck(deck.id);
 
         Actions.pop();
-
-
-
     }
 
     render() {
@@ -115,7 +94,6 @@ class CardDetails extends React.Component {
                             size={15}
                             color='red'
                             backgroundColor='white'
-
                         />
                     }
                     title='Delete Deck'
@@ -153,15 +131,15 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   const { deckName, decks } = state.decks
 
-    var deck = null;
+    var lastDeck = null;
 
     if(decks.length > 0){
-        lastDeck = decks.reverse()[0];
+        lastDeck = decks[0];
     }
 
   return {
     decks: decks,
-    lastDeck: decks[0]
+    lastDeck: lastDeck
   };
 };
 
