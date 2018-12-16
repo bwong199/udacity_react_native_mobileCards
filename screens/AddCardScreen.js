@@ -5,7 +5,7 @@ import { Input } from '../components/Input';
 import { Card } from '../components/Card';
 import { connect } from 'react-redux';
 import { Button } from '../components/Button';
-import { createDeck, deckNameChanged, questionChanged, answerChanged } from '../actions'
+import { createDeck, deckNameChanged, questionChanged, answerChanged, addCardToDeck } from '../actions'
 import { TouchableWithoutFeedback, View, Picker, StyleSheet, Text } from 'react-native';
 import Toast, { DURATION } from 'react-native-easy-toast'
 
@@ -18,7 +18,6 @@ class AddCardScreen extends Component {
     this.state = {
         deckName: ''
         }
-
 }
 
   static navigationOptions = {
@@ -34,8 +33,15 @@ class AddCardScreen extends Component {
   }
 
   onButtonPress() {
-    this.props.createDeck(this.props.deckName);
 
+    const deck = this.props.deck;
+
+    const question = this.props.question;
+
+    const answer = this.props.answer;
+
+    this.props.addCardToDeck(deck.id, question, answer)
+    
     this.refs.toast.show('Deck Created!');
 
   }
@@ -88,5 +94,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, 
-  { createDeck, deckNameChanged, questionChanged, answerChanged  })
+  { createDeck, deckNameChanged, questionChanged, answerChanged, addCardToDeck  })
   (AddCardScreen);

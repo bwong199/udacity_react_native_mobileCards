@@ -2,22 +2,33 @@ import {
     DECK_SAVED_SUCCESS,
     DECK_NAME_CHANGED,
     GET_DECKS,
-    DECK_DELETED_SUCCESS, QUESTION_CHANGED, ANSWER_CHANGED
+    DECK_DELETED_SUCCESS,
+    QUESTION_CHANGED,
+    ANSWER_CHANGED,
+    RESET_CREATED, CARD_SAVED_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
     deckName: " ",
-    decks: [], 
+    decks: [],
     question: " ",
-    answer: " "
+    answer: " ",
+    created: false
 };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case DECK_SAVED_SUCCESS:
+        case CARD_SAVED_SUCCESS:
+        console.log('card saved in reducer', action.payload);
             return {
                 ...state,
                 decks: action.payload
+            }
+        case DECK_SAVED_SUCCESS:
+            return {
+                ...state,
+                decks: action.payload,
+                created: true
             }
         case DECK_DELETED_SUCCESS:
             return {
@@ -40,12 +51,15 @@ export default (state = INITIAL_STATE, action) => {
                 answer: action.payload
             }
         case GET_DECKS:
-            console.log('getting decks');
             return {
                 ...state,
                 decks: action.payload
             }
-
+        case RESET_CREATED:
+            return {
+                ...state,
+                created: false
+            }
 
         default:
             return state;

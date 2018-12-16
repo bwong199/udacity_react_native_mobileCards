@@ -4,19 +4,53 @@ import { CardSection } from '../components/CardSection';
 import { Input } from '../components/Input';
 import { Card } from '../components/Card';
 import { connect } from 'react-redux';
-import { createDeck, deleteDeck, getDecks } from '../actions'
+import { createDeck, deleteDeck, getDecks, resetCreated } from '../actions'
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 
 class CardDetails extends React.Component {
+
+    constructor() {
+        super();
+    
+        this.state = {
+            deck: null
+            }
+    
+    }
+
     static navigationOptions = {
         title: 'Card Details Screen',
     };
 
+    componentWillMount(){
+        // console.log('this.props.deck', this.props.deck);
+
+        // if(!this.props.deck){
+        //     // console.log('NO DECK');
+        //     // console.log(this.props.decks);
+        //     // var decks = this.props.decks;
+        //     // console.log(decks[decks.length - 1])
+        //     this.setState({ deck: this.props.decks[0]})
+
+        //     console.log('DECK STATE' , this.state)
+        // }
+    }
+
+    componentDidMount(){
+        // this.props.resetCreated();
+    }
+
+
     onAddCardPress() {
-        const deckID = this.props.deck.id;
-        Actions.addCard();
+        if(this.props.deck){
+            const deck = this.props.deck;
+            Actions.addCard({deck});
+        } else {
+            console.log('test', this.props.lastDeck)
+        }
+
 
     }
 
@@ -25,16 +59,23 @@ class CardDetails extends React.Component {
     }
 
     onDeleteDeckPress() {
-        const deckID = this.props.deck.id;
-        this.props.deleteDeck(deckID);
-        Actions.deckHome();
+        const deck = this.props.deck ? this.props.deck : this.props.lastDeck
+
+        this.props.deleteDeck(deck.id);
+
+        Actions.pop();
+
+
+
     }
 
     render() {
         return (
             <Card style={styles.containerStyle}>
                  <Text style={styles.titleStyle}>
-                            {this.props.deck.name}
+                            {this.props.deck ? 
+                            this.props.deck.name:
+                            this.props.lastDeck ? this.props.lastDeck.name : <Text/>}
                         </Text>
                 <Button
                     style={styles.button}
@@ -112,10 +153,16 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   const { deckName, decks } = state.decks
 
-  console.log(decks);
+    var deck = null;
+
+    if(decks.length > 0){
+        lastDeck = decks.reverse()[0];
+    }
+
   return {
-    decks: decks
+    decks: decks,
+    lastDeck: decks[0]
   };
 };
 
-export default connect(mapStateToProps, { deleteDeck })(CardDetails);
+export default connect(mapStateToProps, { deleteDeck, resetCreated })(CardDetails);

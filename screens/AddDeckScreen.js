@@ -8,6 +8,7 @@ import { Button } from '../components/Button';
 import { createDeck, deckNameChanged } from '../actions'
 import { TouchableWithoutFeedback, View, Picker, StyleSheet, Text } from 'react-native';
 import Toast, { DURATION } from 'react-native-easy-toast'
+import { Actions } from 'react-native-router-flux';
 
 
 class AddDeckScreen extends Component {
@@ -32,7 +33,10 @@ class AddDeckScreen extends Component {
   onButtonPress() {
     this.props.createDeck(this.props.deckName);
 
-    this.refs.toast.show('Deck Created!');
+    this.refs.toast.show('Deck Created!', 500);
+    // this.props.navigation.navigate('DecksStack')
+
+    Actions.cardDetails2();
 
   }
 
@@ -72,8 +76,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const {deckName, decks } = state.decks
-  console.log( 'deckName',deckName);
-  console.log( 'decks',decks);
 
   return {deckName, decks } ;
 };

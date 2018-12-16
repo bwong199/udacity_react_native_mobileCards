@@ -10,7 +10,6 @@ class ListItem extends Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
                 <View>

@@ -13,10 +13,11 @@ import {
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
-import { createDeck, deckNameChanged, getDecks } from '../actions'
+import { createDeck, deckNameChanged, getDecks, resetCreated } from '../actions'
 import { connect } from 'react-redux';
 import CardSection from '../components/CardSection';
 import { Actions } from 'react-native-router-flux';
+import CardDetails from './CardDetails';
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -32,12 +33,15 @@ class HomeScreen extends Component {
   }
 
   componentWillMount() {
+    this.props.getDecks();
     //  AsyncStorage.removeItem('decks');
     AsyncStorage.getItem('decks').then((res) => {
       var arr = JSON.parse(res)
       const ds = this.state.dataSource.cloneWithRows(arr);
 
       this.setState({ dataSource: ds.cloneWithRows(arr) })
+
+
     })
   }
 
@@ -45,34 +49,41 @@ class HomeScreen extends Component {
     AsyncStorage.getItem('decks').then((res) => {
       var arr = JSON.parse(res)
       const ds = this.state.dataSource.cloneWithRows(arr);
-      this.setState({ dataSource: ds })
+      this.setState({ dataSource: ds }) 
     })
+  }
+
+  componentDidMount() {
+    console.log('mount');
   }
 
   onRowPress(deck) {
     Actions.cardDetails({ deck });
 
-    console.log(deck.name);
   }
+
 
 
   render() {
     return (
+
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <ListView
-            removeClippedSubviews={false}
-            style={styles.container}
-            dataSource={this.state.dataSource}
-            renderRow={(data) =>
-              <TouchableWithoutFeedback onPress={(event) => this.onRowPress(data)}>
-                <View style={styles.containerStyle}>
-                  <Text>{data.name}</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            }
-          />
-        </ScrollView>
+
+          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+            <ListView
+              // removeClippedSubviews={false}
+              style={styles.container}
+              dataSource={this.state.dataSource}
+              renderRow={(data) =>
+                <TouchableWithoutFeedback onPress={(event) => this.onRowPress(data)}>
+                  <View style={styles.containerStyle}>
+                    <Text>{data.name}</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              }
+            />
+          </ScrollView>
+        
       </View>
     );
   }
@@ -98,12 +109,18 @@ const styles = StyleSheet.create({
 // export default HomeScreen;
 
 const mapStateToProps = (state) => {
-  const { deckName, decks } = state.decks
+  const { deckName, decks, created } = state.decks
 
-  console.log(decks);
+  if(created){
+    var lastDeck = decks.reverse()[0];
+
+    Actions.cardDetails({lastDeck});
+  }
+
   return {
-    decks: decks
+    decks,
+    created
   };
 };
 
-export default connect(mapStateToProps, { getDecks })(HomeScreen);
+export default connect(mapStateToProps, { getDecks, resetCreated })(HomeScreen);

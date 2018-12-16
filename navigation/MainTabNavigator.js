@@ -5,6 +5,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import AddDeckScreen from '../screens/AddDeckScreen';
+import AddDeck from '../screens/AddDeck';
+
 import Decks from '../screens/Decks';
 
 const DecksStack = createStackNavigator({
@@ -21,13 +23,14 @@ DecksStack.navigationOptions = {
           ? `ios-albums`
           : 'md-albums'
       }
+      
     />
   ),
 };
 
 
 const AddDeckStack = createStackNavigator({
-  AddDeck: AddDeckScreen,
+  AddDeck: AddDeck,
 });
 
 AddDeckStack.navigationOptions = {
@@ -45,5 +48,5 @@ AddDeckStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   DecksStack,
-  AddDeckScreen,
+  AddDeckStack,
 });
