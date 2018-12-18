@@ -8,6 +8,7 @@ import { Button } from '../components/Button';
 import { createDeck, deckNameChanged, questionChanged, answerChanged, addCardToDeck } from '../actions'
 import { TouchableWithoutFeedback, View, Picker, StyleSheet, Text } from 'react-native';
 import Toast, { DURATION } from 'react-native-easy-toast'
+import { Actions } from 'react-native-router-flux';
 
 
 class AddCardScreen extends Component {
@@ -24,6 +25,10 @@ class AddCardScreen extends Component {
     title: 'Add Deck',
   };
 
+  componentWillMount(){
+    console.log('PROPS', this.props)
+  }
+  
   onQuestionChanged(text){
     this.props.questionChanged(text);
   }
@@ -34,17 +39,17 @@ class AddCardScreen extends Component {
 
   onButtonPress() {
 
-    const deck = this.props.deck;
+    const deck = this.props.navigation.state.params.deck;
 
     const question = this.props.question;
 
     const answer = this.props.answer;
-
+    
     this.props.addCardToDeck(deck.id, question, answer)
     
     this.refs.toast.show('Deck Created!', 300);
 
-    Actions.pop();
+    this.props.navigation.goBack();
 
   }
 

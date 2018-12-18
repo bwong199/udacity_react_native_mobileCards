@@ -17,16 +17,16 @@ class AddDeckScreen extends Component {
     super();
 
     this.state = {
-        deckName: ''
-        }
+      deckName: ''
+    }
 
-}
+  }
 
   static navigationOptions = {
     title: 'Add Deck',
   };
 
-  onDeckNameChanged(text){
+  onDeckNameChanged(text) {
     this.props.deckNameChanged(text);
   }
 
@@ -34,9 +34,9 @@ class AddDeckScreen extends Component {
     this.props.createDeck(this.props.deckName);
 
     this.refs.toast.show('Deck Created!', 500);
-    // this.props.navigation.navigate('DecksStack')
+    this.props.navigation.navigate('CardDetails')
 
-    Actions.cardDetails2();
+    // Actions.cardDetails2();
 
   }
 
@@ -75,9 +75,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const {deckName, decks } = state.decks
+  const { deckName, decks } = state.decks
 
-  return {deckName, decks } ;
+  return { deckName, decks };
 };
 
 export default connect(mapStateToProps, { createDeck, deckNameChanged })(AddDeckScreen);

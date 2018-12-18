@@ -25,19 +25,19 @@ class CardDetails extends React.Component {
     };
 
     onAddCardPress() {
-        if(this.props.deck){
-            const deck = this.props.deck;
-            Actions.addCard({deck});
-        } else {
-            console.log('test', this.props.lastDeck)
-        }
+        const deck = this.props.deck ? this.props.deck : this.props.lastDeck
+
+        this.props.navigation.navigate('AddCardScreen', {deck})
     }
 
     onStartQuizPress() {
         console.log('start quiz pressed');
         const deck = this.props.deck ? this.props.deck : this.props.lastDeck
 
-        Actions.quiz({deck});
+        // Actions.quiz({deck});
+
+        this.props.navigation.navigate('Quiz', {deck})
+
     }
 
     onDeleteDeckPress() {
@@ -45,7 +45,9 @@ class CardDetails extends React.Component {
 
         this.props.deleteDeck(deck.id);
 
-        Actions.pop();
+        this.props.navigation.goBack();
+
+        
     }
 
     render() {
@@ -134,7 +136,7 @@ const mapStateToProps = (state) => {
     var lastDeck = null;
 
     if(decks.length > 0){
-        lastDeck = decks[0];
+        lastDeck = decks.reverse()[0];
     }
 
   return {

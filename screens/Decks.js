@@ -46,7 +46,7 @@ export default class Decks extends React.Component {
           <Router>
             <Scene key="root">
               <Scene key='deckHome' title='Decks' component={HomeScreen} icon={TabIcon} initial />
-              <Scene key='cardDetails' title='Card Details' component={CardDetails} icon={TabIcon} />
+              <Scene key='cardDetailsMain' title='Card Details' component={CardDetails} icon={TabIcon} />
               <Scene key='addCard' title='Add Card' component={AddCardScreen} icon={TabIcon} />
               <Scene key='quiz' title='Quiz' component={Quiz} icon={TabIcon} />
             </Scene>

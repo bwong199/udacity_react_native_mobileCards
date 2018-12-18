@@ -18,68 +18,146 @@ import { connect } from 'react-redux';
 import CardSection from '../components/CardSection';
 import { Actions } from 'react-native-router-flux';
 import CardDetails from './CardDetails';
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Quiz extends Component {
-    static navigationOptions = {
-        title: 'Deck Quiz Screen',
-    };
+  static navigationOptions = {
+    title: 'Deck Quiz Screen',
+  };
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: ds.cloneWithRows([])
+      answered: 0,
+      questions: [],
+      questionLen: 0,
+      currentDeck: null,
+      currentInd: 0,
+      finished: false,
+      corrects: 0,
+      results: 0
     };
   }
 
   componentWillMount() {
-    const ds = this.state.dataSource.cloneWithRows(this.props.deck.questions);
 
-    this.setState({ dataSource: ds })
+    this.setState({ questions: this.props.navigation.state.params.deck.questions });
+    this.setState({ questionLen: this.props.navigation.state.params.deck.questions.length });
+    this.setState({ currentDeck: this.props.navigation.state.params.deck.questions[0] })
+    this.setState({ isVisible: false })
+  }
+
+  onCorrectPress(data) {
+    console.log(data);
+
+    if (this.state.questionLen == this.state.currentInd + 1) {
+      console.log('FINISHED');
+      this.setState({ finished: true })
+      this.setState({ results: (this.state.corrects / (this.state.questionLen  ) * 100).toFixed(2) })
+
+    } else {
+      this.setState({ currentInd: this.state.currentInd + 1 }, function () {
+        this.setState({ currentDeck: this.state.questions[this.state.currentInd] })
+      })
+
+      this.setState({ corrects: this.state.corrects + 1 })
+    }
 
   }
 
-//   componentWillUpdate() {
-//     AsyncStorage.getItem('decks').then((res) => {
-//       var arr = JSON.parse(res)
-//       const ds = this.state.dataSource.cloneWithRows(arr);
-//       this.setState({ dataSource: ds }) 
-//     })
-//   }
+  onIncorrectPress(data) {
 
-  componentDidMount() {
-    console.log('mount');
+    if (this.state.questionLen == this.state.currentInd + 1) {
+      console.log('FINISHED');
+      this.setState({ finished: true })
+      this.setState({ results: (this.state.corrects / (this.state.questionLen  ) * 100).toFixed(2) })
+    } else {
+      this.setState({ currentInd: this.state.currentInd + 1 }, function () {
+        this.setState({ currentDeck: this.state.questions[this.state.currentInd] })
+
+      })
+    }
   }
 
-  onRowPress(deck) {
-    Actions.cardDetails({ deck });
-
+  onShowAnswerPress() {
+    this.setState({ isVisible: true })
   }
-
-
 
   render() {
-      console.log('quiz',this.props.deck);
+
     return (
 
       <View style={styles.container}>
 
-          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-            <ListView
-              // removeClippedSubviews={false}
-              style={styles.container}
-              dataSource={this.state.dataSource}
-              renderRow={(data) =>
-                <TouchableWithoutFeedback onPress={(event) => this.onRowPress(data)}>
-                  <View style={styles.containerStyle}>
-                <Text>{data.question}</Text>
 
-    
-                  </View>
-                </TouchableWithoutFeedback>
-              }
+        {this.state.finished ?
+
+<Text>
+  {this.state.results} %
+</Text> :
+<Text />}
+
+
+
+        <Text>
+          {this.state.currentDeck.question}
+        </Text>
+        <Button
+          title={this.state.currentDeck.id}
+          style={styles.button}
+          onPress={(event) => this.onCorrectPress(this.state.currentDeck)}
+          icon={
+            <Icon
+              name='arrow-right'
+              size={15}
+              color='green'
+              backgroundColor='white'
+
             />
-          </ScrollView>
-        
+          }
+          title='Correct'
+        />
+        <Button
+          title={this.state.currentDeck.id}
+          style={styles.button}
+          onPress={(event) => this.onIncorrectPress(this.state.currentDeck)}
+          icon={
+            <Icon
+              name='arrow-right'
+              size={15}
+              color='red'
+              backgroundColor='white'
+            />
+          }
+          title='Incorrect'
+        />
+
+
+        <Button
+          title={this.state.currentDeck.id}
+          style={styles.button}
+          onPress={(event) => this.onShowAnswerPress(this.state.currentDeck)}
+          icon={
+            <Icon
+              name='arrow-right'
+              size={15}
+              color='red'
+              backgroundColor='white'
+            />
+          }
+          title='Show Answer'
+        />
+
+        {this.state.isVisible ?
+
+          <Text>
+            {this.state.currentDeck.answer}
+          </Text> :
+          <Text />}
+
+
+
       </View>
     );
   }

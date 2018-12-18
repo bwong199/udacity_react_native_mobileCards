@@ -15,8 +15,8 @@ import { Scene, Router, ActionConst } from 'react-native-router-flux';
 
 import { MonoText } from '../components/StyledText';
 import HomeScreen from './HomeScreen';
-import CardDetails from './CardDetails';
 import AddDeckScreen from './AddDeckScreen';
+import CardDetails from './CardDetails';
 
 class TabIcon extends React.Component {
     render() {

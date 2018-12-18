@@ -6,11 +6,17 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import AddDeckScreen from '../screens/AddDeckScreen';
 import AddDeck from '../screens/AddDeck';
+import CardDetails from '../screens/CardDetails';
+import Quiz from '../screens/Quiz';
+import AddCardScreen from '../screens/AddCardScreen';
 
 import Decks from '../screens/Decks';
 
 const DecksStack = createStackNavigator({
-  Decks: Decks,
+  HomeScreen: HomeScreen,
+  CardDetails: CardDetails,
+  Quiz: Quiz,
+  AddCardScreen: AddCardScreen
 });
 
 DecksStack.navigationOptions = {
@@ -30,7 +36,10 @@ DecksStack.navigationOptions = {
 
 
 const AddDeckStack = createStackNavigator({
-  AddDeck: AddDeck,
+  AddDeck: AddDeckScreen,
+  CardDetails: CardDetails,
+  Quiz: Quiz,
+  AddCardScreen: AddCardScreen
 });
 
 AddDeckStack.navigationOptions = {
@@ -47,6 +56,6 @@ AddDeckStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  DecksStack,
   AddDeckStack,
+  DecksStack
 });

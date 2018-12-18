@@ -53,13 +53,11 @@ class HomeScreen extends Component {
     })
   }
 
-  componentDidMount() {
-    console.log('mount');
-  }
 
   onRowPress(deck) {
     console.log('responsive');
-    Actions.cardDetails({ deck });
+    // Actions.cardDetailsMain({ deck });
+    this.props.navigation.navigate('CardDetails', {deck})
 
   }
 
@@ -98,6 +96,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingTop: 10
   },
   containerStyle: {
     borderBottomWidth: 1,
@@ -114,12 +113,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { deckName, decks, created } = state.decks
-
-  if(created){
-    var lastDeck = decks.reverse()[0];
-
-    Actions.cardDetails({lastDeck});
-  }
 
   return {
     decks,
