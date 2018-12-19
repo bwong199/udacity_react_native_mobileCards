@@ -48,32 +48,44 @@ class Quiz extends Component {
     this.setState({ isVisible: false })
   }
 
+  saveQuizTime() {
+    const currentTime = new Date();
+
+    AsyncStorage.setItem('lastQuizTime', currentTime).then(() => {
+      AsyncStorage.getItem('lastQuizTime').then((res) => {
+        console.log(res)
+      }
+      )
+    })
+  }
+
   onCorrectPress(data) {
-    console.log(data);
+    console.log('correct');
 
     if (this.state.questionLen == this.state.currentInd + 1) {
-      console.log('FINISHED');
       this.setState({ finished: true })
-      this.setState({ results: (this.state.corrects / (this.state.questionLen  ) * 100).toFixed(2) })
 
+      this.setState({ results: ((this.state.corrects + 1) / (this.state.questionLen) * 100).toFixed(2) })
+      this.saveQuizTime();
     } else {
       this.setState({ currentInd: this.state.currentInd + 1 }, function () {
         this.setState({ currentDeck: this.state.questions[this.state.currentInd] })
       })
 
-      this.setState({ corrects: this.state.corrects + 1 })
+      this.setState({ corrects: this.state.corrects += 1 })
     }
 
   }
 
   onIncorrectPress(data) {
-
+    console.log('incorrect');
     if (this.state.questionLen == this.state.currentInd + 1) {
-      console.log('FINISHED');
       this.setState({ finished: true })
-      this.setState({ results: (this.state.corrects / (this.state.questionLen  ) * 100).toFixed(2) })
+      this.setState({ results: (this.state.corrects / (this.state.questionLen) * 100).toFixed(2) })
+      this.saveQuizTime();
+
     } else {
-      this.setState({ currentInd: this.state.currentInd + 1 }, function () {
+      this.setState({ currentInd: this.state.currentInd += 1 }, function () {
         this.setState({ currentDeck: this.state.questions[this.state.currentInd] })
 
       })
@@ -93,10 +105,10 @@ class Quiz extends Component {
 
         {this.state.finished ?
 
-<Text>
-  {this.state.results} %
+          <Text>
+            {this.state.results} %
 </Text> :
-<Text />}
+          <Text />}
 
 
 

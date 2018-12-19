@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { Alert,ScrollView, StyleSheet, Text } from 'react-native';
 import { CardSection } from '../components/CardSection';
 import { Input } from '../components/Input';
 import { Card } from '../components/Card';
@@ -36,7 +36,16 @@ class CardDetails extends React.Component {
 
         // Actions.quiz({deck});
 
-        this.props.navigation.navigate('Quiz', {deck})
+        console.log('deck questions ', deck.questions.length)
+
+        const deckQuestionLength = deck.questions.length;
+
+        if(deckQuestionLength > 0){
+            this.props.navigation.navigate('Quiz', {deck})
+        } else {
+
+        }
+
 
     }
 

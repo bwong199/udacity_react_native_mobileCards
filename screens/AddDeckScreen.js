@@ -36,8 +36,6 @@ class AddDeckScreen extends Component {
     this.refs.toast.show('Deck Created!', 500);
     this.props.navigation.navigate('CardDetails')
 
-    // Actions.cardDetails2();
-
   }
 
   render() {
