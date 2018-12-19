@@ -2,7 +2,9 @@
 
 This app is called Mobile FlashCards and was built for IOS using React-Native. 
 
-The app is intended for studying and allows a user to create a deck of cards where each card contains a question and answer. 
+The app is intended for studying and allows a user to create a deck of cards where each card contains a question and answer.
+
+AsyncStorage is used to store the data. 
 
 The user can quiz himself by answering the questions in the deck of card. 
 
