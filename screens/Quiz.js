@@ -25,11 +25,11 @@ class Quiz extends Component {
   static navigationOptions = {
     title: 'Deck Quiz Screen',
   };
+  
   constructor(props) {
     super(props);
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      answered: 0,
       questions: [],
       questionLen: 0,
       currentDeck: null,
@@ -94,6 +94,17 @@ class Quiz extends Component {
 
   onShowAnswerPress() {
     this.setState({ isVisible: true })
+  }
+
+  onRestartQuizStart(){
+    this.setState({ questions: this.props.navigation.state.params.deck.questions });
+    this.setState({ questionLen: this.props.navigation.state.params.deck.questions.length });
+    this.setState({ currentDeck: this.props.navigation.state.params.deck.questions[0] })
+    this.setState({ isVisible: false })
+    this.setState({ finished: false })
+    this.setState({ currentInd: false })
+    this.setState({ corrects: 0 })
+    this.setState({ results: 0 })
   }
 
   render() {
@@ -168,7 +179,23 @@ class Quiz extends Component {
           </Text> :
           <Text />}
 
+        {this.state.finished ?
 
+          <Button
+            title={this.state.currentDeck.id}
+            style={styles.button}
+            onPress={(event) => this.onRestartQuizStart()}
+            icon={
+              <Icon
+                name='arrow-right'
+                size={15}
+                color='red'
+                backgroundColor='white'
+              />
+            }
+            title='Restart Quiz'
+          /> :
+          <Text />}
 
       </View>
     );
