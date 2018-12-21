@@ -43,9 +43,9 @@ class CardDetails extends React.Component {
         if(deckQuestionLength > 0){
             this.props.navigation.navigate('Quiz', {deck})
         } else {
-            Alert.alert(
-                'Add some cards to begin quiz'
-             )
+            // Alert.alert(
+            //     'Add some cards to begin quiz'
+            //  )
         }
 
 

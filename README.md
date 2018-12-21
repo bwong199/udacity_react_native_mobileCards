@@ -12,4 +12,11 @@ A percentage score will show at the end of the quiz.
 
 A local notification is sent to the user if a quiz has not been completed in 24 hours. 
 
+To get started:
+
+1) In the same directory as this readMe, type "npm install"
+
+2) type "expo start" and a page will open up in your browser
+
+3) click on "Run on IOS simulator" to begin the app
  

@@ -96,6 +96,10 @@ class Quiz extends Component {
     this.setState({ isVisible: true })
   }
 
+  onBackToDeckPressed(){
+    this.props.navigation.goBack();
+  }
+
   onRestartQuizStart(){
     this.setState({ questions: this.props.navigation.state.params.deck.questions });
     this.setState({ questionLen: this.props.navigation.state.params.deck.questions.length });
@@ -106,7 +110,7 @@ class Quiz extends Component {
     this.setState({ corrects: 0 })
     this.setState({ results: 0 })
   }
-
+  
   render() {
 
     return (
@@ -194,9 +198,32 @@ class Quiz extends Component {
               />
             }
             title='Restart Quiz'
-          /> :
+            
+          /> 
+          
+          :
           <Text />}
 
+        {this.state.finished ?
+
+<Button
+  title={this.state.currentDeck.id}
+  style={styles.button}
+  onPress={(event) => this.onBackToDeckPressed()}
+  icon={
+    <Icon
+      name='arrow-right'
+      size={15}
+      color='red'
+      backgroundColor='white'
+    />
+  }
+  title='Back to Deck'
+  
+/> 
+
+:
+<Text />}
       </View>
     );
   }
